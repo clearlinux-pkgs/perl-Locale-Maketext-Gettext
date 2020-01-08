@@ -4,16 +4,17 @@
 #
 Name     : perl-Locale-Maketext-Gettext
 Version  : 1.30
-Release  : 13
+Release  : 14
 URL      : https://cpan.metacpan.org/authors/id/I/IM/IMACAT/Locale-Maketext-Gettext-1.30.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/I/IM/IMACAT/Locale-Maketext-Gettext-1.30.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libl/liblocale-maketext-gettext-perl/liblocale-maketext-gettext-perl_1.28-2.debian.tar.xz
-Summary  : Joins gettext and Maketext frameworks
+Summary  : 'Joins gettext and Maketext frameworks'
 Group    : Development/Tools
 License  : Artistic-1.0 Artistic-1.0-Perl GPL-1.0 GPL-3.0
 Requires: perl-Locale-Maketext-Gettext-bin = %{version}-%{release}
 Requires: perl-Locale-Maketext-Gettext-license = %{version}-%{release}
 Requires: perl-Locale-Maketext-Gettext-man = %{version}-%{release}
+Requires: perl-Locale-Maketext-Gettext-perl = %{version}-%{release}
 BuildRequires : buildreq-cpan
 
 %description
@@ -39,7 +40,6 @@ Group: Development
 Requires: perl-Locale-Maketext-Gettext-bin = %{version}-%{release}
 Provides: perl-Locale-Maketext-Gettext-devel = %{version}-%{release}
 Requires: perl-Locale-Maketext-Gettext = %{version}-%{release}
-Requires: perl-Locale-Maketext-Gettext = %{version}-%{release}
 
 %description dev
 dev components for the perl-Locale-Maketext-Gettext package.
@@ -61,12 +61,22 @@ Group: Default
 man components for the perl-Locale-Maketext-Gettext package.
 
 
+%package perl
+Summary: perl components for the perl-Locale-Maketext-Gettext package.
+Group: Default
+Requires: perl-Locale-Maketext-Gettext = %{version}-%{release}
+
+%description perl
+perl components for the perl-Locale-Maketext-Gettext package.
+
+
 %prep
 %setup -q -n Locale-Maketext-Gettext-1.30
-cd ..
-%setup -q -T -D -n Locale-Maketext-Gettext-1.30 -b 1
+cd %{_builddir}
+tar xf %{_sourcedir}/liblocale-maketext-gettext-perl_1.28-2.debian.tar.xz
+cd %{_builddir}/Locale-Maketext-Gettext-1.30
 mkdir -p deblicense/
-cp -r %{_topdir}/BUILD/debian/* %{_topdir}/BUILD/Locale-Maketext-Gettext-1.30/deblicense/
+cp -r %{_builddir}/debian/* %{_builddir}/Locale-Maketext-Gettext-1.30/deblicense/
 
 %build
 export http_proxy=http://127.0.0.1:9/
@@ -91,8 +101,8 @@ make TEST_VERBOSE=1 test
 %install
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/perl-Locale-Maketext-Gettext
-cp COPYING %{buildroot}/usr/share/package-licenses/perl-Locale-Maketext-Gettext/COPYING
-cp deblicense/copyright %{buildroot}/usr/share/package-licenses/perl-Locale-Maketext-Gettext/deblicense_copyright
+cp %{_builddir}/Locale-Maketext-Gettext-1.30/COPYING %{buildroot}/usr/share/package-licenses/perl-Locale-Maketext-Gettext/8624bcdae55baeef00cd11d5dfcfa60f68710a02
+cp %{_builddir}/Locale-Maketext-Gettext-1.30/deblicense/copyright %{buildroot}/usr/share/package-licenses/perl-Locale-Maketext-Gettext/24acf436c804a2a3bf2b0dde94aa8560a6e6d544
 if test -f Makefile.PL; then
 make pure_install PERL_INSTALL_ROOT=%{buildroot} INSTALLDIRS=vendor
 else
@@ -105,8 +115,6 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.28.2/Locale/Maketext/Gettext.pm
-/usr/lib/perl5/vendor_perl/5.28.2/Locale/Maketext/Gettext/Functions.pm
 
 %files bin
 %defattr(-,root,root,-)
@@ -119,9 +127,14 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/perl-Locale-Maketext-Gettext/COPYING
-/usr/share/package-licenses/perl-Locale-Maketext-Gettext/deblicense_copyright
+/usr/share/package-licenses/perl-Locale-Maketext-Gettext/24acf436c804a2a3bf2b0dde94aa8560a6e6d544
+/usr/share/package-licenses/perl-Locale-Maketext-Gettext/8624bcdae55baeef00cd11d5dfcfa60f68710a02
 
 %files man
 %defattr(0644,root,root,0755)
 /usr/share/man/man1/maketext.1
+
+%files perl
+%defattr(-,root,root,-)
+/usr/lib/perl5/vendor_perl/5.30.1/Locale/Maketext/Gettext.pm
+/usr/lib/perl5/vendor_perl/5.30.1/Locale/Maketext/Gettext/Functions.pm
