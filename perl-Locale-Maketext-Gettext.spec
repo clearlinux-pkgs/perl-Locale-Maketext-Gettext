@@ -4,7 +4,7 @@
 #
 Name     : perl-Locale-Maketext-Gettext
 Version  : 1.30
-Release  : 15
+Release  : 16
 URL      : https://cpan.metacpan.org/authors/id/I/IM/IMACAT/Locale-Maketext-Gettext-1.30.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/I/IM/IMACAT/Locale-Maketext-Gettext-1.30.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libl/liblocale-maketext-gettext-perl/liblocale-maketext-gettext-perl_1.28-2.debian.tar.xz
@@ -136,5 +136,5 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files perl
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.30.2/Locale/Maketext/Gettext.pm
-/usr/lib/perl5/vendor_perl/5.30.2/Locale/Maketext/Gettext/Functions.pm
+/usr/lib/perl5/vendor_perl/5.30.3/Locale/Maketext/Gettext.pm
+/usr/lib/perl5/vendor_perl/5.30.3/Locale/Maketext/Gettext/Functions.pm
